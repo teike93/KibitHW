@@ -11,6 +11,7 @@ import * as dashBoardReducer from './redux/dashboard.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import * as DashBoardEffects from './redux/dashboard.effects';
 import {DashboardEffects} from './redux/dashboard.effects';
+import {dashboardFeatureKey} from './redux/dashboard.reducer';
 
 @NgModule({
   declarations: [
