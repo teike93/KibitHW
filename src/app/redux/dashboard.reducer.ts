@@ -12,14 +12,14 @@ export const initialState: State = {
   dateFilter: createDateFilter(new Date('1800-01-01'), new Date('2100-01-01'))
 };
 
-const scoreboardReducer = createReducer(
+const dashboardReducer = createReducer(
   initialState,
-  on(DashBoardActions.addChartData, state => ({...state})),
+  on(DashBoardActions.addChartData, (state, name) => ({...state})),
   on(DashBoardActions.addChartDataSuccess, state => ({...state})),
   on(DashBoardActions.modifyFilterDate, (state, {from, to}) => ({...state, dateFilter: createDateFilter(from, to)})),
   on(DashBoardActions.removeChartData, state => ({...state}))
 );
 
 export function reducer(state: State | undefined, action: Action) {
-  return scoreboardReducer(state, action);
+  return dashboardReducer(state, action);
 }

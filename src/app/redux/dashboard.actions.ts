@@ -1,25 +1,28 @@
 import {createAction, props} from '@ngrx/store';
+import {ChartModel} from './dashboard.models';
 
-export enum dashBoardActions {
-  addChart = '[Dashboard] add chart data',
-  addChartSuccess = '[Dashboard] add chart data success',
+export enum DashBoardActionsEnum {
+  addChartData = '[Dashboard] add chart data',
+  addChartDataSuccess = '[Dashboard] add chart data success',
   removeChart = '[Dashboard] remove chart data',
   modifyFilterDate = '[Dashboard] modify date filter'
 }
 export const addChartData = createAction(
-  dashBoardActions.addChart
+  DashBoardActionsEnum.addChartData,
+  props<{ name }>()
 );
 
 export const addChartDataSuccess = createAction(
-  dashBoardActions.addChartSuccess
+  DashBoardActionsEnum.addChartDataSuccess,
+  props<{ chart: ChartModel }>()
 );
 
 export const removeChartData = createAction(
-  dashBoardActions.removeChart
+  DashBoardActionsEnum.removeChart
 );
 
 export const modifyFilterDate = createAction(
-  dashBoardActions.modifyFilterDate,
+  DashBoardActionsEnum.modifyFilterDate,
   props<{ from: Date; to: Date }>()
 );
 

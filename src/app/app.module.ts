@@ -8,6 +8,9 @@ import {TopbarComponent} from './topbar/topbar.component';
 import {RouterModule} from '@angular/router';
 import {StoreModule} from '@ngrx/store';
 import * as dashBoardReducer from './redux/dashboard.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import * as DashBoardEffects from './redux/dashboard.effects';
+import {DashboardEffects} from './redux/dashboard.effects';
 
 @NgModule({
   declarations: [
