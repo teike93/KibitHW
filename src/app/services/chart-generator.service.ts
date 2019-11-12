@@ -52,14 +52,14 @@ export class ChartGeneratorService {
       //       'y: ' + this.y.toFixed(2);
       //   }
       // },
-      // xAxis: {
-      //   type: 'datetime',
-      //   labels: {
-      //     formatter() {
-      //       return Highcharts.dateFormat('%e %b %y', this.value);
-      //     }
-      //   }
-      // },
+      xAxis: {
+        type: 'datetime',
+        labels: {
+          formatter() {
+            return Highcharts.dateFormat('%Y', this.value);
+          }
+        }
+      },
       series: [{
         name: chartModel.name,
         type: chartModel.type,
@@ -68,8 +68,7 @@ export class ChartGeneratorService {
     });
 
     chartModel.sensorData.map(value => {
-      console.log(value);
-      // newChart.addPoint([value.x.getTime(), value.y]);
+      newChart.addPoint([value.x.getTime(), value.y]);
       return value;
     });
 
