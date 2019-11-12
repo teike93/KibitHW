@@ -62,8 +62,9 @@ export class ChartGeneratorService {
       },
       series: [{
         name: chartModel.name,
-        type: chartModel.type,
-        data: [[0, 0]]
+        type: chartModel.type === 'bar' ? 'bar' : 'line',
+        data: [[0, 0]],
+        color: chartModel.color
       }]
     });
 

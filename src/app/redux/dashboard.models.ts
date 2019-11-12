@@ -23,7 +23,7 @@ export interface ChartModel {
   sensorData: Array<SensorData>;
   name: string;
   id: number;
-  type: 'line';
+  type: 'line' | 'bar';
   color: string;
 }
 
