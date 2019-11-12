@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ChartModel, createChartModel, createSensorData, SensorData} from '../redux/dashboard.models';
+import {ChartModel, createChartModel, createSensorData, DateFilter, SensorData} from '../redux/dashboard.models';
 import {SeriesObject} from '../chart/chart.component';
 import {Chart} from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
@@ -42,7 +42,7 @@ export class ChartGeneratorService {
     return createChartModel(sensorDataArray, name, this.lastId++, type, color);
   }
 
-  createChart(chartModel: ChartModel) {
+  refreshChart(chartModel: ChartModel , dateFilter: DateFilter) {
     const newChart = new Chart({
       chart: {type: chartModel.type},
       title: {text: 'Chart ' + chartModel.name},
@@ -63,13 +63,15 @@ export class ChartGeneratorService {
       series: [{
         name: chartModel.name,
         type: chartModel.type === 'bar' ? 'bar' : 'line',
-        data: [[0, 0]],
+        data: [],
         color: chartModel.color
       }]
     });
 
     chartModel.sensorData.map(value => {
-      newChart.addPoint([value.x.getTime(), value.y]);
+      if (dateFilter.from < value.x && dateFilter.to > value.x) {
+        newChart.addPoint([value.x.getTime(), value.y]);
+      }
       return value;
     });
 

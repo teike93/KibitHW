@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ChartModel} from '../redux/dashboard.models';
+import {ChartModel, createDateFilter} from '../redux/dashboard.models';
 import {Chart} from 'angular-highcharts';
 import {ChartGeneratorService} from '../services/chart-generator.service';
 
@@ -31,7 +31,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   @Input('chart')
   set chartData(value: ChartModel) {
-    this.chartObject = this.chartGen.createChart(value);
+    this.chartObject = this.chartGen.refreshChart(value, createDateFilter(new Date('1999-01-01'), new Date('2020-01-01')));
     this._chartData = value;
   }
 

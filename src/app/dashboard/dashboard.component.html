@@ -1,12 +1,20 @@
 <app-topbar></app-topbar>
 <h1>Dashboard</h1>
 <div *ngIf="(dateFilter | async); let dateFilter; else dateFilterFilled">
-<h2>{{dateFilter.from}}</h2>
-<h2>{{dateFilter.to}}</h2>
+  <h2>{{dateFilter.from}}</h2>
+  <h2>{{dateFilter.to}}</h2>
 </div>
+
+<button (click)="addChart()">Add chart</button>
+<input type="text" class="btn btn-primary" [(ngModel)]="chartName">
+
+
+<button (click)="removeChart()" class="btn btn-primary">Remove chart</button>
+
+
 <div *ngIf="(charts | async); let charts; else loadingCharts">
 
-  <div *ngFor="let chart of charts" >
+  <div *ngFor="let chart of charts">
     <app-chart [chart]="chart"></app-chart>
   </div>
 

@@ -3,11 +3,10 @@ import {select, Store} from '@ngrx/store';
 import {ChartModel, DateFilter} from '../redux/dashboard.models';
 import {Observable} from 'rxjs';
 import {DashBoardActionsEnum} from '../redux/dashboard.actions';
-import {map, mergeMap, tap} from 'rxjs/operators';
-import {AppState, selectDashboard} from '../redux/dashboard.reducer';
+import {map} from 'rxjs/operators';
 import * as fromStore from '../redux/dashboard.reducer';
 import {selectDashboardCharts} from '../redux/dashboard.selectors';
-import {HcOptions} from '../chart/chart.component';
+import {NgbCheckBox, NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +16,7 @@ import {HcOptions} from '../chart/chart.component';
 export class DashboardComponent implements OnInit, OnChanges {
   charts: Observable<Array<ChartModel>>;
   dateFilter: Observable<DateFilter>;
+  chartName: string;
 
   constructor(private store: Store<fromStore.AppState>) {
     console.log(store);
@@ -28,10 +28,7 @@ export class DashboardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.store.dispatch({type: DashBoardActionsEnum.addChartData, name: 'lol'});
-    this.store.dispatch({type: DashBoardActionsEnum.addChartData, name: 'lol2'});
     this.store.dispatch({type: DashBoardActionsEnum.modifyFilterDate, from: new Date(), to: new Date()});
-    // this.store.dispatch({type: DashBoardActionsEnum.removeChart});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,4 +36,11 @@ export class DashboardComponent implements OnInit, OnChanges {
     console.log(changes);
   }
 
+  addChart(): void {
+    this.store.dispatch({type: DashBoardActionsEnum.addChartData, name: this.chartName ? this.chartName : 'Unnamed'});
+  }
+
+  removeChart(): void {
+    this.store.dispatch({type: DashBoardActionsEnum.removeChart});
+  }
 }
