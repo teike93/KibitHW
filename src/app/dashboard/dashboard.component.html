@@ -1,4 +1,20 @@
 <app-topbar></app-topbar>
 <h1>Dashboard</h1>
-<app-chart></app-chart>
+<div *ngIf="(dateFilter | async); let dateFilter; else dateFilterFilled">
+<h2>{{dateFilter.from}}</h2>
+<h2>{{dateFilter.to}}</h2>
+</div>
+<div *ngIf="(charts | async); let charts; else loadingCharts">
 
+  <div *ngFor="let chart of charts" >
+    <app-chart [chart]="chart"></app-chart>
+  </div>
+
+</div>
+<ng-template #loadingCharts>
+  Loading charts!
+</ng-template>
+
+<ng-template #dateFilterFilled>
+  Datefilter Not filled!
+</ng-template>

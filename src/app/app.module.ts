@@ -11,7 +11,7 @@ import * as dashBoardReducer from './redux/dashboard.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import * as DashBoardEffects from './redux/dashboard.effects';
 import {DashboardEffects} from './redux/dashboard.effects';
-import {dashboardFeatureKey} from './redux/dashboard.reducer';
+import {dashboardFeatureKey, reducers} from './redux/dashboard.reducer';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import {dashboardFeatureKey} from './redux/dashboard.reducer';
     RouterModule.forRoot([
       {path: '', component: DashboardComponent}
     ]),
-    StoreModule.forRoot({dashboard: dashBoardReducer.reducer}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([DashboardEffects])
   ],
   providers: [],
