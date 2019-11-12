@@ -1,23 +1,17 @@
 <app-topbar></app-topbar>
-<h1>Dashboard</h1>
-<div *ngIf="(dateFilter); let dateFilter; else dateFilterFilled">
-  <h2>{{dateFilter.from}}</h2>
-  <h2>{{dateFilter.to}}</h2>
+<h1 class="text-center">Dashboard</h1>
+<div class="container align-start">
+  <div class="row">
+    <button (click)="addChart()" class="btn btn-primary col-sm">Add chart</button>
+    <input type="text" class="form-control col-sm" placeholder="Chart name" [(ngModel)]="chartName">
+    <button (click)="removeChart()" class="btn btn-primary col-sm">Remove chart</button>
+  </div>
 </div>
 
-<button (click)="addChart()" class="btn btn-primary">Add chart</button>
-<input type="text" class="form-control" placeholder="Chart name" [(ngModel)]="chartName">
-
-
-<button (click)="removeChart()" class="btn btn-primary">Remove chart</button>
-
-
 <div *ngIf="(charts)">
-
-  <div *ngFor="let chart of charts; trackBy: trackByChanges;" >
-    <app-chart [chartData]="chart" [dateFilter]="dateFilter"></app-chart>
+  <div *ngFor="let chart of charts; trackBy: trackByChanges;">
+    <app-chart [chartData]="chart" [dateFilter]="dateFilter" [charts]="charts"></app-chart>
   </div>
-
 </div>
 <ng-template #loadingCharts>
   Loading charts!

@@ -3,7 +3,7 @@ import {ChartModel, createChartModel, createSensorData, DateFilter, SensorData} 
 import {SeriesObject} from '../chart/chart.component';
 import {Chart} from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
-import {Options, Point} from 'highcharts';
+import {Options, Point, Series} from 'highcharts';
 import {DataOptions} from 'highcharts';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ChartGeneratorService {
   // }
 
   generateChartData(x: number, from: Date, to: Date, name: string, type: string, color: string): ChartModel {
-    const sensorDataArray = [];
+    const sensorDataArray: Array<{ x: Date, y: number }> = [];
     for (let i = 0; i < x; i++) {
       const randomNumber = Math.floor(Math.random() * 6);
       const randomDate = new Date(+from + Math.random() * (+to - +from));
@@ -39,10 +39,13 @@ export class ChartGeneratorService {
     //   // series: {name: name, type: 'line', data: sensorDataArray}
     // });
     // formattedChart.addPoint(sensorDataArray[0].x, sensorDataArray[0].y);
+    sensorDataArray.sort((a, b) => {
+      return a.x.getTime() - b.x.getTime();
+    });
     return createChartModel(sensorDataArray, name, this.lastId++, type, color);
   }
 
-  refreshChart(chartModel: ChartModel , dateFilter: DateFilter) {
+  refreshChart(chartModel: ChartModel, dateFilter: DateFilter, addedCharts: Array<ChartModel>) {
     const newChart = new Chart({
       chart: {type: chartModel.type},
       title: {text: 'Chart ' + chartModel.name},
@@ -60,25 +63,25 @@ export class ChartGeneratorService {
           }
         }
       },
-      series: [{
-        name: chartModel.name,
-        type: chartModel.type === 'bar' ? 'bar' : 'line',
-        data: [],
-        color: chartModel.color
-      }]
     });
-
-    chartModel.sensorData.map(value => {
-      if (dateFilter) {
-        if (dateFilter.from < value.x && dateFilter.to > value.x) {
-          newChart.addPoint([value.x.getTime(), value.y]);
-        }
-      } else {
-        newChart.addPoint([value.x.getTime(), value.y]);
-      }
-      return value;
-    });
+    const series = this.createSeries(chartModel.name, chartModel.type, chartModel.color, chartModel.sensorData, dateFilter);
+    newChart.addSeries(series, true, true);
     console.log('Chart refreshed');
     return newChart;
+  }
+
+  private createSeries(name, type, color,  sensorData, dateFilter) {
+    const series = [];
+    sensorData.map((s) => {
+      if (dateFilter) {
+        if (dateFilter.from < s.x && dateFilter.to > s.x) {
+          series.push([s.x.getTime(), s.y]);
+        }
+      } else {
+        series.push([s.x.getTime(), s.y]);
+      }
+    });
+    console.log(series);
+    return {name, type, color, data: series};
   }
 }
