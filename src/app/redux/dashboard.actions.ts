@@ -5,7 +5,9 @@ export enum DashBoardActionsEnum {
   addChartData = '[Dashboard] add chart data',
   addChartDataSuccess = '[Dashboard] add chart data success',
   removeChart = '[Dashboard] remove chart data',
-  modifyFilterDate = '[Dashboard] modify date filter'
+  modifyFilterDate = '[Dashboard] modify date filter',
+  changeChartColor = '[Dashboard] change chart color',
+  changeChartType = '[Dashboard] change chart type'
 }
 export const addChartData = createAction(
   DashBoardActionsEnum.addChartData,
@@ -15,6 +17,16 @@ export const addChartData = createAction(
 export const addChartDataSuccess = createAction(
   DashBoardActionsEnum.addChartDataSuccess,
   props<{ chart: ChartModel }>()
+);
+
+export const changeChartColor = createAction(
+  DashBoardActionsEnum.changeChartColor,
+  props<{ id: number, color: string }>()
+);
+
+export const changeChartType = createAction(
+  DashBoardActionsEnum.changeChartType,
+  props<{ id: number, chartType: 'bar' | 'line' }>()
 );
 
 export const removeChartData = createAction(

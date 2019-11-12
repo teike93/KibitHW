@@ -21,10 +21,10 @@ const dashboardReducer = createReducer(
   initialState,
   on(DashBoardActions.addChartData, (state) => ({...state})),
   on(DashBoardActions.addChartDataSuccess, (state, {chart}) => {
-    console.log('SUCCESS DATA')
+    console.log('SUCCESS DATA');
     console.log(state);
     console.log({...state, charts: [...state.charts, chart]});
-    console.log('..............')
+    console.log('..............');
     return {...state, charts: [...state.charts, chart]};
   }),
   on(DashBoardActions.modifyFilterDate, (state, {from, to}) => {
@@ -36,11 +36,38 @@ const dashboardReducer = createReducer(
   }),
   on(DashBoardActions.removeChartData, state => {
     console.log('REMOVE HAPPENED');
-    const tail = ([x, ...xs]) => xs;
     console.log([...state.charts]);
     console.log(state.charts.slice(1));
     console.log('..............');
     return ({...state, charts: state.charts.slice(1)});
+  }),
+  on(DashBoardActions.changeChartColor, (state, {id, color}) => {
+    const workState = {...state};
+    console.log('Change color happened');
+    workState.charts.map((c) => {
+      if (c.id === id) {
+        c.color = color;
+        c.changes = new Date();
+      }
+      return {...c};
+    });
+    console.log(workState);
+    console.log('.....................');
+    return {...workState, charts: [...workState.charts]};
+  }),
+  on(DashBoardActions.changeChartType, (state, {id, chartType}) => {
+    const workState = {...state};
+    console.log('Change type happened');
+    workState.charts.map((c) => {
+      if (c.id === id) {
+        c.type = chartType;
+        c.changes = new Date();
+      }
+      return {...c};
+    });
+    console.log(workState);
+    console.log('.....................');
+    return {...workState, charts: [...workState.charts]};
   })
 );
 
