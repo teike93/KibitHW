@@ -1,9 +1,9 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {ChartModel, DateFilter} from '../redux/dashboard.models';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {DashBoardActionsEnum} from '../redux/dashboard.actions';
-import {map} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import * as fromStore from '../redux/dashboard.reducer';
 import {selectDashboardCharts} from '../redux/dashboard.selectors';
 import {NgbCheckBox, NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
@@ -13,22 +13,18 @@ import {NgbCheckBox, NgbButtonsModule} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnChanges {
-  charts: Observable<Array<ChartModel>>;
-  dateFilter: Observable<DateFilter>;
+export class DashboardComponent implements OnInit, OnChanges, OnDestroy {
+  charts: Array<ChartModel>;
+  dateFilter: DateFilter;
   chartName: string;
+  private destroy$ = new Subject();
 
   constructor(private store: Store<fromStore.AppState>) {
-    console.log(store);
-    this.charts = store.select(selectDashboardCharts).pipe(map(value => {
-      console.log(value);
-      return value;
-    }));
-    this.dateFilter = store.select(state => state.dashboard.dateFilter);
   }
 
   ngOnInit() {
-    this.store.dispatch({type: DashBoardActionsEnum.modifyFilterDate, from: new Date(), to: new Date()});
+    this.store.select(selectDashboardCharts).pipe(takeUntil(this.destroy$)).subscribe(value => this.charts = value);
+    this.store.select(state => state.dashboard.dateFilter).pipe(takeUntil(this.destroy$)).subscribe(value => this.dateFilter = value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,5 +38,10 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   removeChart(): void {
     this.store.dispatch({type: DashBoardActionsEnum.removeChart});
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

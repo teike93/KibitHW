@@ -69,12 +69,16 @@ export class ChartGeneratorService {
     });
 
     chartModel.sensorData.map(value => {
-      if (dateFilter.from < value.x && dateFilter.to > value.x) {
+      if (dateFilter) {
+        if (dateFilter.from < value.x && dateFilter.to > value.x) {
+          newChart.addPoint([value.x.getTime(), value.y]);
+        }
+      } else {
         newChart.addPoint([value.x.getTime(), value.y]);
       }
       return value;
     });
-
+    console.log('Chart refreshed');
     return newChart;
   }
 }
