@@ -24,15 +24,13 @@ export class DashboardComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.store.select(selectDashboardCharts).pipe(takeUntil(this.destroy$)).subscribe(value => {
-      console.log('Refreshed subscription', value)
       this.charts = value; this.changeDetector.detectChanges();
     });
     this.store.select(state => state.dashboard.dateFilter).pipe(takeUntil(this.destroy$)).subscribe(value => this.dateFilter = value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes on component: dashb ');
-    console.log(changes);
+
   }
 
   addChart(): void {

@@ -36,23 +36,24 @@ export class ChartComponent implements OnInit, OnChanges {
   private chartObject;
   private _chartData: ChartModel;
   private _dateFilter: DateFilter;
-  private chartsSelected: Array<ChartModel>;
+  private chartsSelected: Array<ChartModel> = [];
   _charts: Array<ChartModel>;
 
   get charts(): Array<ChartModel> {
     return this._charts;
   }
+
   @Input()
   set charts(value) {
     this._charts = value;
   }
+
   get chartData(): ChartModel {
     return this._chartData;
   }
 
   @Input()
   set chartData(value: ChartModel) {
-    console.log('new chartData');
     this.chartObject = this.chartGen.refreshChart(value, this._dateFilter, null);
     this._chartData = value;
   }
@@ -63,9 +64,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   @Input()
   set dateFilter(value: DateFilter) {
-    console.log('dateFilter changed in chart :');
-    console.log(value);
-    this.chartObject = this.chartGen.refreshChart(this._chartData, createDateFilter(value.from, value.to),null);
+    this.chartObject = this.chartGen.refreshChart(this._chartData, createDateFilter(value.from, value.to), null);
     this._dateFilter = value;
   }
 
@@ -77,9 +76,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes on chart: ');
-    console.log(this._chartData);
-    this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, null);
+    // this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, null);
   }
 
   changeColor() {
@@ -103,11 +100,15 @@ export class ChartComponent implements OnInit, OnChanges {
     });
   }
 
-  chartChanged() {
-    console.log('Chart shoudl change');
-  }
-
   toggleChart(chart: ChartModel) {
-
+    if (this.chartsSelected) {
+      const foundIndex = this.chartsSelected.findIndex((c) => chart.id === c.id);
+      if (foundIndex > -1) {
+        this.chartsSelected.splice(foundIndex, 1);
+      } else {
+        this.chartsSelected.push(chart);
+      }
+    }
+    this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, this.chartsSelected);
   }
 }

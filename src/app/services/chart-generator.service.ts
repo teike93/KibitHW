@@ -49,12 +49,6 @@ export class ChartGeneratorService {
     const newChart = new Chart({
       chart: {type: chartModel.type},
       title: {text: 'Chart ' + chartModel.name},
-      // tooltip: {
-      //   formatter() {
-      //     return 'x: ' + Highcharts.dateFormat('%e %b %y %H:%M:%S', this.x) +
-      //       'y: ' + this.y.toFixed(2);
-      //   }
-      // },
       xAxis: {
         type: 'datetime',
         labels: {
@@ -64,13 +58,23 @@ export class ChartGeneratorService {
         }
       },
     });
+    /**
+     * Refresh series on this one
+     */
     const series = this.createSeries(chartModel.name, chartModel.type, chartModel.color, chartModel.sensorData, dateFilter);
     newChart.addSeries(series, true, true);
-    console.log('Chart refreshed');
+    /**
+     * Add series if we need more
+     */
+    if (addedCharts) {
+      addedCharts.map((c) => {
+        newChart.addSeries(this.createSeries(c.name, c.type, c.color, c.sensorData, dateFilter), true, true);
+      });
+    }
     return newChart;
   }
 
-  private createSeries(name, type, color,  sensorData, dateFilter) {
+  private createSeries(name, type, color, sensorData, dateFilter) {
     const series = [];
     sensorData.map((s) => {
       if (dateFilter) {
@@ -81,7 +85,6 @@ export class ChartGeneratorService {
         series.push([s.x.getTime(), s.y]);
       }
     });
-    console.log(series);
     return {name, type, color, data: series};
   }
 }
