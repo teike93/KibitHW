@@ -1,17 +1,22 @@
-
-
+<h1 class="text-center pb-3">Dashboard</h1>
 <div class="container">
-  <ngb-datepicker class="text-center" #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
-  </ngb-datepicker>
+  <div class="row">
+    <div class="col text-center pb-5">
+    <ngb-datepicker  #dp (select)="onDateSelection($event)" [displayMonths]="2"
+                    [dayTemplate]="t" outsideDays="hidden">
+    </ngb-datepicker>
+    <ng-template #t let-date let-focused="focused">
+      <span class="custom-day"
+            [class.focused]="focused"
+            [class.range]="isRange(date)"
+            [class.faded]="isHovered(date) || isInside(date)"
+            (mouseenter)="hoveredDate = date"
+            (mouseleave)="hoveredDate = null">
+        {{ date.day }}
+      </span>
+    </ng-template>
+    </div>
+  </div>
 </div>
 
-<ng-template #t let-date let-focused="focused">
-  <span class="custom-day"
-        [class.focused]="focused"
-        [class.range]="isRange(date)"
-        [class.faded]="isHovered(date) || isInside(date)"
-        (mouseenter)="hoveredDate = date"
-        (mouseleave)="hoveredDate = null">
-    {{ date.day }}
-  </span>
-</ng-template>
+

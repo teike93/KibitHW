@@ -1,10 +1,13 @@
-<div [chart]="chartObject"></div>
-<button (click)="changeColor()">Change color</button>
-<button (click)="changeType()">Change type</button>
-<div class="form-group">
-  <div *ngFor="let chart of charts">
-    <div *ngIf="chart.id !== chartData.id">
-      <button (click)="toggleChart(chart)">{{chart.name}} - {{chart.id}}</button>
+<div class="container text-center custom-container">
+  <div [chart]="chartObject"></div>
+  <div>
+    <button class="btn btn-primary col-sm" (click)="changeColor()">Change color</button>
+    <button class="btn btn-primary col-sm" (click)="changeType()">Change type</button>
+    <div *ngFor="let chart of charts">
+      <div *ngIf="chart.id !== chartData.id">
+        <button class="btn btn-primary col-sm" (click)="toggleChart(chart)">{{chart.name}} - {{chart.id}}</button>
+      </div>
     </div>
   </div>
 </div>
+

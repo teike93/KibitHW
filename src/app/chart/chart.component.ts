@@ -54,7 +54,12 @@ export class ChartComponent implements OnInit, OnChanges {
 
   @Input()
   set chartData(value: ChartModel) {
-    this.chartObject = this.chartGen.refreshChart(value, this._dateFilter, null);
+    console.log('NEW CHARTDATA');
+    console.log(value);
+    console.log('selected');
+    console.log(this.chartsSelected);
+
+    this.chartObject = this.chartGen.refreshChart(value, this._dateFilter, this.chartsSelected);
     this._chartData = value;
   }
 
@@ -64,7 +69,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   @Input()
   set dateFilter(value: DateFilter) {
-    this.chartObject = this.chartGen.refreshChart(this._chartData, createDateFilter(value.from, value.to), null);
+    this.chartObject = this.chartGen.refreshChart(this._chartData, createDateFilter(value.from, value.to), this.chartsSelected);
     this._dateFilter = value;
   }
 
@@ -76,7 +81,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, null);
+    this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, this.chartsSelected);
   }
 
   changeColor() {

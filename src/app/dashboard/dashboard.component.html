@@ -1,5 +1,4 @@
 <app-topbar></app-topbar>
-<h1 class="text-center">Dashboard</h1>
 <div class="container align-start">
   <div class="row">
     <button (click)="addChart()" class="btn btn-primary col-sm">Add chart</button>
@@ -8,7 +7,7 @@
   </div>
 </div>
 
-<div *ngIf="(charts)">
+<div *ngIf="(charts)" class="pt-5 pb-5">
   <div *ngFor="let chart of charts; trackBy: trackByChanges;">
     <app-chart [chartData]="chart" [dateFilter]="dateFilter" [charts]="charts"></app-chart>
   </div>
