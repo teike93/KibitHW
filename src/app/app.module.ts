@@ -7,11 +7,10 @@ import {ChartComponent} from './chart/chart.component';
 import {TopbarComponent} from './topbar/topbar.component';
 import {RouterModule} from '@angular/router';
 import {StoreModule} from '@ngrx/store';
-import * as dashBoardReducer from './redux/dashboard.reducer';
 import {EffectsModule} from '@ngrx/effects';
-import * as DashBoardEffects from './redux/dashboard.effects';
 import {DashboardEffects} from './redux/dashboard.effects';
-import {dashboardFeatureKey, reducers} from './redux/dashboard.reducer';
+import {reducers} from './redux/dashboard.reducer';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,8 @@ import {dashboardFeatureKey, reducers} from './redux/dashboard.reducer';
       {path: '', component: DashboardComponent}
     ]),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([DashboardEffects])
+    EffectsModule.forRoot([DashboardEffects]),
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

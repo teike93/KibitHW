@@ -1,16 +1,49 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ChartModel} from '../redux/dashboard.models';
+import {Chart} from 'angular-highcharts';
+import {ChartGeneratorService} from '../services/chart-generator.service';
+
+export interface SeriesObject {
+  name: string;
+  type: string;
+  data: Array<{ y: number, name: string }>;
+}
+
+export interface HcOptions {
+  chart: { type: string };
+  title: { text: string };
+  series: Array<SeriesObject>;
+}
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
-  @Input() chart: ChartModel;
-  constructor() { }
+export class ChartComponent implements OnInit, OnChanges {
 
-  ngOnInit() {
+  private chartObject;
+  private _chartData: ChartModel;
+
+  get chartData(): ChartModel {
+    return this._chartData;
   }
 
+  @Input('chart')
+  set chartData(value: ChartModel) {
+    this.chartObject = this.chartGen.createChart(value);
+    this._chartData = value;
+  }
+
+  constructor(private chartGen: ChartGeneratorService) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Changes on chart: ');
+    console.log(changes);
+  }
 }

@@ -19,7 +19,7 @@ export class DashboardEffects {
           ofType(DashBoardActionsEnum.addChartData),
           exhaustMap((action) => {
             const {name} = action;
-            return of(this.chartGen.generateChart(100, new Date('1800-01-01'), new Date('2100-01-01'), name))
+            return of(this.chartGen.generateChartData(100, new Date('1800-01-01'), new Date('2100-01-01'), name, 'line', 'red'))
               .pipe(
                 map(chart => ({type: DashBoardActionsEnum.addChartDataSuccess, chart})),
                 catchError(() => EMPTY)

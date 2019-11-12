@@ -1,6 +1,7 @@
-<h1>{{chart.name}}</h1>
-<ul>
-  <li *ngFor="let item of chart.sensorData; let i = index">
-    {{i}} {{item.y}}
-  </li>
-</ul>
+<h1>{{_chartData?.name}}</h1>
+<!--<ul>-->
+<!--  <li *ngFor="let item of _chartData?.sensorData; let i = index">-->
+<!--    {{i}} {{item.y}}-->
+<!--  </li>-->
+<!--</ul>-->
+<div [chart]="chartObject"></div>
