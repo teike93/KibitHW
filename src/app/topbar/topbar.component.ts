@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbDate, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import {DashBoardActionsEnum} from '../redux/dashboard.actions';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../redux/dashboard.reducer';
@@ -31,7 +31,11 @@ export class TopbarComponent implements OnInit {
       this.fromDate = date;
     }
     if (this.fromDate && this.toDate) {
-      this.store.dispatch({type: DashBoardActionsEnum.modifyFilterDate, from: new Date(this.convertDate(this.fromDate)), to: this.convertDate(this.toDate)});
+      this.store.dispatch({
+        type: DashBoardActionsEnum.modifyFilterDate,
+        from: new Date(this.convertDate(this.fromDate)),
+        to: this.convertDate(this.toDate)
+      });
     }
   }
 

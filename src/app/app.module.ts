@@ -10,7 +10,7 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {DashboardEffects} from './redux/dashboard.effects';
 import {reducers} from './redux/dashboard.reducer';
-import { ChartModule } from 'angular-highcharts';
+import {ChartModule} from 'angular-highcharts';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 

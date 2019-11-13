@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, of} from 'rxjs';
-import {catchError, exhaustMap, map, mergeMap, tap} from 'rxjs/operators';
+import {catchError, exhaustMap, map} from 'rxjs/operators';
 import {ChartGeneratorService} from '../services/chart-generator.service';
 import {DashBoardActionsEnum} from './dashboard.actions';
 

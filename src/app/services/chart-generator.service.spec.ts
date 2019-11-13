@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ChartGeneratorService } from './chart-generator.service';
+import {ChartGeneratorService} from './chart-generator.service';
 
 describe('ChartGeneratorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

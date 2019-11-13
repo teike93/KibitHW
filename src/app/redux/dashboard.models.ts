@@ -1,6 +1,3 @@
-import {HcOptions} from '../chart/chart.component';
-import {Chart} from 'highcharts';
-
 export interface DateFilter {
   from: Date;
   to: Date;

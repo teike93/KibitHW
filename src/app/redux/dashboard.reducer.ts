@@ -1,4 +1,4 @@
-import {Action, ActionReducerMap, createReducer, createSelector, on} from '@ngrx/store';
+import {Action, ActionReducerMap, createReducer, on} from '@ngrx/store';
 import * as DashBoardActions from './dashboard.actions';
 import {ChartModel, createDateFilter, DateFilter} from './dashboard.models';
 
@@ -15,7 +15,6 @@ export const initialState: DashboardState = {
   charts: new Array<ChartModel>(),
   dateFilter: createDateFilter(new Date('1800-01-01'), new Date('2100-01-01'))
 };
-export const dashboardFeatureKey = 'dashboard';
 
 const dashboardReducer = createReducer(
   initialState,

@@ -2,10 +2,10 @@
 <div class="container">
   <div class="row">
     <div class="col text-center pb-5">
-    <ngb-datepicker  #dp (select)="onDateSelection($event)" [displayMonths]="2"
-                    [dayTemplate]="t" outsideDays="hidden">
-    </ngb-datepicker>
-    <ng-template #t let-date let-focused="focused">
+      <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2"
+                      [dayTemplate]="t" outsideDays="hidden">
+      </ngb-datepicker>
+      <ng-template #t let-date let-focused="focused">
       <span class="custom-day"
             [class.focused]="focused"
             [class.range]="isRange(date)"
@@ -14,7 +14,7 @@
             (mouseleave)="hoveredDate = null">
         {{ date.day }}
       </span>
-    </ng-template>
+      </ng-template>
     </div>
   </div>
 </div>
