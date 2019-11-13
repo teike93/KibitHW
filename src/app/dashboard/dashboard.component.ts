@@ -34,7 +34,9 @@ export class DashboardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addChart(): void {
-    this.store.dispatch({type: DashBoardActionsEnum.addChartData, name: this.chartName ? this.chartName : 'Unnamed'});
+    if (this.charts.length < 4) {
+      this.store.dispatch({type: DashBoardActionsEnum.addChartData, name: this.chartName ? this.chartName : 'Unnamed'});
+    }
   }
 
   removeChart(): void {
