@@ -53,7 +53,7 @@ export class ChartGeneratorService {
         type: 'datetime',
         labels: {
           formatter() {
-            return Highcharts.dateFormat('%Y', this.value);
+            return Highcharts.dateFormat('%Y %b %e.', this.value);
           }
         }
       },
