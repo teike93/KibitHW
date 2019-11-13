@@ -33,7 +33,7 @@ export enum colors {
 })
 export class ChartComponent implements OnInit, OnChanges {
 
-  private chartObject;
+  chartObject;
   private _chartData: ChartModel;
   private _dateFilter: DateFilter;
   private chartsSelected: Array<ChartModel> = [];
