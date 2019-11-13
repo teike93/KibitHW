@@ -3,7 +3,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, of} from 'rxjs';
 import {catchError, exhaustMap, map} from 'rxjs/operators';
 import {ChartGeneratorService} from '../services/chart-generator.service';
-import {DashBoardActionsEnum} from './dashboard.actions';
+import {addChartDataSuccess, DashBoardActionsEnum, ErrorDashboardAction} from './dashboard.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -21,9 +21,8 @@ export class DashboardEffects {
             const {name} = action;
             return of(this.chartGen.generateChartData(100, new Date('2019-01-01'), new Date('2019-12-31'), name, 'line', 'red'))
               .pipe(
-                map(chart => ({type: DashBoardActionsEnum.addChartDataSuccess, chart})),
-                catchError(() => EMPTY)
-              );
+                map(chart => (addChartDataSuccess({chart}))),
+                catchError((error: Error) => of(ErrorDashboardAction({error}))));
           })
         );
       }

@@ -5,7 +5,7 @@
     <button class="btn btn-primary col-sm mb-1" (click)="changeType()">Change type</button>
     <div *ngFor="let chart of charts">
       <div *ngIf="chart.id !== chartData.id">
-        <button class="btn btn-primary col-sm mb-1" (click)="toggleChart(chart)">{{chart.name}} - {{chart.id}}</button>
+        <button class="btn btn-primary col-sm mb-1" (click)="toggleChart(chart)">Add chart: {{chart.name === 'Unnamed' ? chart.name + '-' + chart.id : chart.name}}</button>
       </div>
     </div>
   </div>

@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ChartModel, createChartModel, createSensorData, DateFilter, SensorData} from '../redux/dashboard.models';
-import {SeriesObject} from '../chart/chart.component';
+import {ChartModel, createChartModel, DateFilter} from '../redux/dashboard.models';
 import {Chart} from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
-import {Options, Point, Series} from 'highcharts';
-import {DataOptions} from 'highcharts';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +13,6 @@ export class ChartGeneratorService {
   constructor() {
   }
 
-  // getSeries(name: string, type: string, sensorData: Array<DataOptions>): ChartSerie  {
-  //   const seriesArray = [];
-  //   return {
-  //     name, type, data: sensorData.map(value => {
-  //       return {y: value.y, name: value.date.toDateString()};
-  //     })
-  //   };
-
-  // }
-
   generateChartData(x: number, from: Date, to: Date, name: string, type: string, color: string): ChartModel {
     const sensorDataArray: Array<{ x: Date, y: number }> = [];
     for (let i = 0; i < x; i++) {
@@ -33,12 +20,6 @@ export class ChartGeneratorService {
       const randomDate = new Date(+from + Math.random() * (+to - +from));
       sensorDataArray.push({x: randomDate, y: randomNumber});
     }
-    // const formattedChart = new Chart({
-    //   chart: {type: 'line'},
-    //   title: {text: 'Chart ' + name},
-    //   // series: {name: name, type: 'line', data: sensorDataArray}
-    // });
-    // formattedChart.addPoint(sensorDataArray[0].x, sensorDataArray[0].y);
     sensorDataArray.sort((a, b) => {
       return a.x.getTime() - b.x.getTime();
     });
