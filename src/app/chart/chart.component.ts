@@ -4,6 +4,7 @@ import {ChartGeneratorService} from '../services/chart-generator.service';
 import {Store} from '@ngrx/store';
 import * as fromStore from '../redux/dashboard.reducer';
 import {DashBoardActionsEnum} from '../redux/dashboard.actions';
+import {takeUntil} from 'rxjs/operators';
 
 export interface SeriesObject {
   name: string;
@@ -58,7 +59,7 @@ export class ChartComponent implements OnInit, OnChanges {
     console.log(value);
     console.log('selected');
     console.log(this.chartsSelected);
-
+    this.chartsSelected = value.selectedCharts;
     this.chartObject = this.chartGen.refreshChart(value, this._dateFilter, this.chartsSelected);
     this._chartData = value;
   }
@@ -77,7 +78,6 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -114,6 +114,11 @@ export class ChartComponent implements OnInit, OnChanges {
         this.chartsSelected.push(chart);
       }
     }
+    this.store.dispatch({
+      type: DashBoardActionsEnum.addChartSelected,
+      id: this._chartData.id,
+      selectedCharts: this.chartsSelected
+    });
     this.chartObject = this.chartGen.refreshChart(this._chartData, this._dateFilter, this.chartsSelected);
   }
 }

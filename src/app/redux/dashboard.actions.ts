@@ -42,7 +42,7 @@ export const modifyFilterDate = createAction(
 
 export const addSelectedCharts = createAction(
   DashBoardActionsEnum.addChartSelected,
-  props<{ charts: Array<ChartModel> }>()
+  props<{ id, selectedCharts: Array<ChartModel> }>()
 );
 
 

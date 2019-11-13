@@ -26,8 +26,9 @@ export interface ChartModel {
   type: 'line' | 'bar';
   color: string;
   changes: Date;
+  selectedCharts: Array<ChartModel>;
 }
 
 export function createChartModel(sensorData, name, id, type, color): ChartModel {
-  return {sensorData, name, id, type, color, changes: new Date()};
+  return {sensorData, name, id, type, color, changes: new Date(), selectedCharts: new Array<ChartModel>()};
 }

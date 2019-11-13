@@ -51,6 +51,17 @@ const dashboardReducer = createReducer(
       return {...c};
     });
     return {...workState, charts: [...workState.charts]};
+  }),
+  on(DashBoardActions.addSelectedCharts, (state, {id, selectedCharts}) => {
+    const workState = {...state};
+    workState.charts.map((c) => {
+      if (c.id === id) {
+        c.selectedCharts = selectedCharts;
+        c.changes = new Date();
+      }
+      return {...c};
+    });
+    return {...workState, charts: [...workState.charts]};
   })
 );
 
